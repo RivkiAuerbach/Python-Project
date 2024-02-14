@@ -1,3 +1,4 @@
+import csv
 from DataSales import DataSales
 #import openpyxl
 from FileOperation import FileOperation
@@ -139,7 +140,7 @@ def main():
 
     # ----------------------------😁-----------------------------
 
-     # ------------------------- TASK 4 ------------------------
+     # ------------------------- TASK 4         !!! רשות 😡------------------------
     # # Convert date format and categorize prices
     # sales_data.convert_date_format()
     # sales_data.categorize_prices()
@@ -180,75 +181,10 @@ def main():
     # Task 25: Filter by Mask
     # Implement calls to filter_by_mask method here
 
-#-------------------------------------------------------------
+#--------------------------😉-----------------------------------
 
-# ------------------------- -עובד - סתם בהערה TASK 6 😍------------------------
-    # Create sample data
-    # x = np.linspace(0, 10, 100)
-    # y = np.sin(x)
-    # data = np.random.randn(100)
-    #
-    # # Create a single figure for all plots
-    # fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(20, 10))
-    #
-    # # Matplotlib Plots
-    #
-    # # Line Plot
-    # axes[0, 0].plot(x, y)
-    # axes[0, 0].set_title('Line Plot')
-    #
-    # # Scatter Plot
-    # axes[0, 1].scatter(x, y)
-    # axes[0, 1].set_title('Scatter Plot')
-    #
-    # # Bar Plot
-    # axes[0, 2].bar(x, y)
-    # axes[0, 2].set_title('Bar Plot')
-    #
-    # # Horizontal Bar Plot
-    # axes[0, 3].barh(x, y)
-    # axes[0, 3].set_title('Horizontal Bar Plot')
-    #
-    # # Histogram
-    # axes[1, 0].hist(data)
-    # axes[1, 0].set_title('Histogram')
-    #
-    # # Box Plot
-    # axes[1, 1].boxplot(data)
-    # axes[1, 1].set_title('Box Plot')
-    #
-    # # Violin Plot
-    # axes[1, 2].violinplot(data)
-    # axes[1, 2].set_title('Violin Plot')
-    #
-    # # Seaborn Plots
-    #
-    # # Load example dataset
-    # tips = sns.load_dataset("tips")
-    #
-    # # Seaborn Line Plot
-    # sns.lineplot(x="total_bill", y="tip", data=tips, ax=axes[1, 3])
-    # axes[1, 3].set_title('Seaborn Line Plot')
-    #
-    # # Seaborn Scatter Plot
-    # sns.scatterplot(x="total_bill", y="tip", data=tips, ax=axes[2, 0])
-    # axes[2, 0].set_title('Seaborn Scatter Plot')
-    #
-    # # Seaborn Bar Plot
-    # sns.barplot(x="day", y="total_bill", data=tips, ax=axes[2, 1])
-    # axes[2, 1].set_title('Seaborn Bar Plot')
-    #
-    # # Seaborn Box Plot
-    # sns.boxplot(x="day", y="total_bill", data=tips, ax=axes[2, 2])
-    # axes[2, 2].set_title('Seaborn Box Plot')
-    #
-    # # Seaborn Violin Plot
-    # sns.violinplot(x="day", y="total_bill", data=tips, ax=axes[2, 3])
-    # axes[2, 3].set_title('Seaborn Violin Plot')
-    #
-    # plt.tight_layout()
-    # plt.show()
-
+# ------------------------ TASK 6 😍-----------------------------
+  ##in the DataSales functions...
 
 #-----------------------🌞-------------------------
 
@@ -285,19 +221,23 @@ def read_additional_files():
 
 
 # 3. Random Number Generator
-def generate_sales_and_max_payment(product_name):
-    product_sales = {
-        'Product1': [100, 200, 300],
-        'Product2': [150, 250, 350],
-        'Product3': [200, 300, 400]
-    }
-    if product_name not in product_sales:
-        print("Error: Product not found.")
-        return None
-
-    sales = random.choice(product_sales[product_name])
-    max_payment = max(product_sales[product_name])
-    return [sales, max_payment]
+def generate_random_number_and_max_payment(file_path, product_name):
+    # קריאת קובץ CSV
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            data.append(row)
+    sales_count = 0
+    max_payment = 0
+    for row in data:
+        if row['Product'] == product_name:
+            sales_count += int(row['Quantity'])
+            payment = int(row['Price']) * int(row['Quantity'])
+            if payment > max_payment:
+                max_payment = payment
+    random_number = random.randint(sales_count, max_payment)
+    return random_number, max_payment
 
 # 4. Print Python Version
 def print_python_version():
@@ -349,10 +289,11 @@ handle_errors()
 read_additional_files()
 
 # 3. Random Number Generator
-product_name = 'Product2'
-result = generate_sales_and_max_payment(product_name)
-if result:
-    print("Randomly generated number of sales and max payment for", product_name + ":", result)
+file_path = 'YafeNof.csv'
+product_name = 'Sidur'
+random_number, max_payment = generate_random_number_and_max_payment(file_path, product_name)
+print(f"the random number {product_name}: {random_number}")
+print(f"the max price {product_name}: {max_payment}")
 
 # 4. Print Python Version
 print_python_version()
